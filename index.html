@@ -15,71 +15,39 @@
     body {
       background: #fafaf9;
       font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
-      color: #1c1c1c;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      color: #1c1c1c; min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center;
       padding-bottom: 100px;
     }
-    header {
-      width: 100%; max-width: 480px;
-      padding: 48px 24px 0;
-      display: flex; justify-content: space-between; align-items: baseline;
-    }
+    header { width: 100%; max-width: 480px; padding: 48px 24px 0; display: flex; justify-content: space-between; align-items: baseline; }
     .header-left .sub { font-size: 11px; letter-spacing: 3px; color: #999; text-transform: uppercase; margin-bottom: 4px; }
     .header-left .title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
     .header-date { font-size: 12px; color: #aaa; }
-    nav {
-      width: 100%; max-width: 480px;
-      padding: 20px 24px 0;
-      display: flex; gap: 4px;
-    }
-    nav button {
-      flex: 1; padding: 8px 0; border: none; border-radius: 10px;
-      font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s;
-    }
+    nav { width: 100%; max-width: 480px; padding: 20px 24px 0; display: flex; gap: 4px; }
+    nav button { flex: 1; padding: 8px 0; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s; }
     nav button.active { background: #1c1c1c; color: #fff; }
     nav button:not(.active) { background: #efefef; color: #666; }
     main { width: 100%; max-width: 480px; padding: 24px 24px 0; }
-    .card {
-      background: #fff; border-radius: 20px; padding: 28px;
-      box-shadow: 0 2px 20px rgba(0,0,0,.06); margin-bottom: 16px;
-    }
+    .card { background: #fff; border-radius: 20px; padding: 28px; box-shadow: 0 2px 20px rgba(0,0,0,.06); margin-bottom: 16px; }
     .mood-row { display: flex; justify-content: space-between; margin-bottom: 24px; }
-    .mood-btn {
-      width: 52px; height: 52px; border-radius: 50%; border: none;
-      font-size: 24px; cursor: pointer; transition: all .2s;
-      background: #f4f4f4;
-    }
+    .mood-btn { width: 52px; height: 52px; border-radius: 50%; border: none; font-size: 24px; cursor: pointer; transition: all .2s; background: #f4f4f4; }
     .mood-btn.selected { transform: scale(1.18); }
-    textarea {
-      width: 100%; border: 1.5px solid #eee; border-radius: 12px;
-      padding: 10px 14px; font-size: 13px; resize: none;
-      outline: none; font-family: inherit; color: #333;
-      background: #fafaf9;
-    }
-    .save-btn {
-      width: 100%; margin-top: 12px; padding: 13px 0;
-      border: none; border-radius: 12px; font-size: 14px; font-weight: 700;
-      cursor: pointer; transition: all .2s;
-    }
+    textarea { width: 100%; border: 1.5px solid #eee; border-radius: 12px; padding: 10px 14px; font-size: 13px; resize: none; outline: none; font-family: inherit; color: #333; background: #fafaf9; }
+    input[type="date"] { width: 100%; border: 1.5px solid #eee; border-radius: 12px; padding: 10px 14px; font-size: 13px; outline: none; font-family: inherit; color: #333; background: #fafaf9; margin-bottom: 16px; -webkit-appearance: none; }
+    .save-btn { width: 100%; margin-top: 12px; padding: 13px 0; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all .2s; }
     .save-btn:disabled { background: #e5e5e5; color: #aaa; cursor: not-allowed; }
     .save-btn:not(:disabled) { background: #1c1c1c; color: #fff; }
+    .edit-btn { background: #f4f4f4; border: none; border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #666; cursor: pointer; margin-top: 10px; }
     .section-label { font-size: 12px; color: #aaa; letter-spacing: 2px; margin-bottom: 12px; padding-left: 4px; }
-    .entry-card {
-      background: #fff; border-radius: 14px; padding: 14px 18px;
-      margin-bottom: 8px; display: flex; align-items: center; gap: 12px;
-      box-shadow: 0 1px 8px rgba(0,0,0,.04);
-    }
+    .entry-card { background: #fff; border-radius: 14px; padding: 14px 18px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 8px rgba(0,0,0,.04); }
     .entry-emoji { font-size: 28px; }
     .entry-info { flex: 1; }
     .entry-date { font-size: 12px; color: #bbb; }
     .entry-label { font-size: 13px; font-weight: 600; color: #333; }
     .entry-comment { font-size: 12px; color: #999; }
+    .entry-edit { background: none; border: none; font-size: 16px; cursor: pointer; padding: 4px; }
     .dot { width: 8px; height: 8px; border-radius: 50%; }
     .empty { text-align: center; color: #ccc; font-size: 13px; padding: 20px 0; }
-    /* Graph */
     .graph-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
     .graph-title { font-size: 16px; font-weight: 700; }
     .avg-badge { background: #fff; border-radius: 20px; padding: 4px 14px; font-size: 13px; font-weight: 700; box-shadow: 0 1px 8px rgba(0,0,0,.06); }
@@ -93,32 +61,25 @@
     .legend-item { text-align: center; flex: 1; }
     .legend-emoji { font-size: 16px; }
     .legend-num { font-size: 10px; color: #bbb; }
-    /* Today recorded */
     .recorded-card { display: flex; align-items: center; gap: 16px; }
     .recorded-emoji { font-size: 48px; }
     .recorded-sub { font-size: 13px; color: #999; margin-bottom: 2px; }
     .recorded-label { font-size: 18px; font-weight: 700; }
     .recorded-comment { font-size: 13px; color: #666; margin-top: 4px; }
-    /* Install banner */
-    #install-banner {
-      position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
-      background: #1c1c1c; color: #fff; border-radius: 16px;
-      padding: 14px 20px; width: calc(100% - 48px); max-width: 440px;
-      display: flex; align-items: center; justify-content: space-between;
-      box-shadow: 0 8px 30px rgba(0,0,0,.2); z-index: 100;
-      font-size: 13px;
-    }
-    #install-banner button {
-      background: #fff; color: #1c1c1c; border: none; border-radius: 8px;
-      padding: 6px 14px; font-size: 12px; font-weight: 700; cursor: pointer;
-    }
-    #install-banner .close-btn {
-      background: transparent; color: #666; padding: 4px 8px; margin-left: 8px;
-    }
+    .penguin-card { background: linear-gradient(135deg, #e0f2fe, #f0fdf4); border-radius: 20px; padding: 20px 24px; box-shadow: 0 2px 20px rgba(0,0,0,.06); margin-bottom: 16px; display: flex; align-items: center; gap: 16px; }
+    .penguin { font-size: 52px; animation: wobble 3s ease-in-out infinite; display: inline-block; }
+    @keyframes wobble { 0%,100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+    .penguin-msg { font-size: 14px; font-weight: 600; color: #334155; line-height: 1.6; }
+    .penguin-sub { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); display: flex; align-items: flex-end; justify-content: center; z-index: 200; }
+    .modal { background: #fff; border-radius: 24px 24px 0 0; padding: 28px 24px 48px; width: 100%; max-width: 480px; }
+    .modal-title { font-size: 16px; font-weight: 700; margin-bottom: 20px; }
+    #install-banner { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); background: #1c1c1c; color: #fff; border-radius: 16px; padding: 14px 20px; width: calc(100% - 48px); max-width: 440px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 8px 30px rgba(0,0,0,.2); z-index: 100; font-size: 13px; }
+    #install-banner button { background: #fff; color: #1c1c1c; border: none; border-radius: 8px; padding: 6px 14px; font-size: 12px; font-weight: 700; cursor: pointer; }
+    #install-banner .close-btn { background: transparent; color: #666; padding: 4px 8px; margin-left: 8px; }
   </style>
 </head>
 <body>
-
 <header>
   <div class="header-left">
     <div class="sub">Mood Diary</div>
@@ -126,15 +87,13 @@
   </div>
   <div class="header-date" id="header-date"></div>
 </header>
-
 <nav>
   <button class="active" onclick="showView('home')">今日</button>
   <button onclick="showView('week')">週</button>
   <button onclick="showView('month')">月</button>
 </nav>
-
 <main id="main"></main>
-
+<div id="modal-root"></div>
 <div id="install-banner" style="display:none">
   <span>📱 ホーム画面に追加できます</span>
   <div style="display:flex;align-items:center">
@@ -142,7 +101,6 @@
     <button class="close-btn" onclick="document.getElementById('install-banner').style.display='none'">✕</button>
   </div>
 </div>
-
 <script>
 const MOODS = [
   { score: 1, emoji: "😔", label: "つらい",   color: "#94a3b8" },
@@ -153,195 +111,158 @@ const MOODS = [
 ];
 const DAYS = ["日","月","火","水","木","金","土"];
 const MONTHS = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"];
-
+const PENGUIN_MSGS = [
+  "今日もお疲れ様です！",
+  "今日も一日よく頑張りました！",
+  "ゆっくり休んでくださいね",
+  "あなたのこと、応援しています！",
+  "今日も生きてくれてありがとう",
+  "小さなことも、ちゃんと頑張ってるよ！",
+  "今日の自分を褒めてあげてね",
+];
 let currentView = 'home';
 let selectedScore = null;
+let editingDate = null;
 let entries = JSON.parse(localStorage.getItem('mood-entries') || '{}');
-
 function todayStr() { return new Date().toISOString().slice(0,10); }
 function mood(score) { return MOODS.find(m => m.score === score); }
-
 function saveEntries() { localStorage.setItem('mood-entries', JSON.stringify(entries)); }
-
-// Header date
+function getPenguinMsg() { const day = new Date().getDate(); return PENGUIN_MSGS[day % PENGUIN_MSGS.length]; }
 const now = new Date();
-document.getElementById('header-date').textContent =
-  `${now.getFullYear()}年${MONTHS[now.getMonth()]}${now.getDate()}日`;
-
+document.getElementById('header-date').textContent = now.getFullYear() + "年" + MONTHS[now.getMonth()] + now.getDate() + "日";
 function showView(v) {
   currentView = v;
-  document.querySelectorAll('nav button').forEach((btn, i) => {
-    btn.classList.toggle('active', ['home','week','month'][i] === v);
-  });
+  document.querySelectorAll('nav button').forEach((btn, i) => { btn.classList.toggle('active', ['home','week','month'][i] === v); });
   render();
 }
-
 function render() {
   const main = document.getElementById('main');
   if (currentView === 'home') main.innerHTML = renderHome();
   else if (currentView === 'week') main.innerHTML = renderGraph(getWeekDates(), '今週');
   else main.innerHTML = renderGraph(getMonthDates(), MONTHS[new Date().getMonth()]);
 }
-
 function renderHome() {
   const today = todayStr();
   const entry = entries[today];
   let html = '';
-
-  if (entry) {
+  html += '<div class="penguin-card"><div class="penguin">🐧</div><div><div class="penguin-msg">' + getPenguinMsg() + '</div><div class="penguin-sub">' + (now.getMonth()+1) + '月' + now.getDate() + '日（' + DAYS[now.getDay()] + '）</div></div></div>';
+  if (entry && editingDate !== today) {
     const m = mood(entry.score);
-    html += `<div class="card">
-      <div class="recorded-card">
-        <span class="recorded-emoji">${m.emoji}</span>
-        <div>
-          <div class="recorded-sub">今日の気分</div>
-          <div class="recorded-label">${m.label}</div>
-          ${entry.comment ? `<div class="recorded-comment">${entry.comment}</div>` : ''}
-        </div>
-      </div>
-    </div>`;
+    html += '<div class="card"><div class="recorded-card"><span class="recorded-emoji">' + m.emoji + '</span><div style="flex:1"><div class="recorded-sub">今日の気分</div><div class="recorded-label">' + m.label + '</div>' + (entry.comment ? '<div class="recorded-comment">' + entry.comment + '</div>' : '') + '</div></div><button class="edit-btn" onclick="startEdit(\'' + today + '\')">✏️ 編集する</button></div>';
   } else {
-    html += `<div class="card">
-      <div style="font-size:14px;color:#999;margin-bottom:20px;text-align:center">今日の気分はどうですか？</div>
-      <div class="mood-row">`;
-    MOODS.forEach(m => {
+    const isEditing = editingDate === today;
+    html += '<div class="card"><div style="font-size:14px;color:#999;margin-bottom:20px;text-align:center">' + (isEditing ? '今日の気分を編集' : '今日の気分はどうですか？') + '</div><div class="mood-row">';
+    MOODS.forEach(function(m) {
       const sel = selectedScore === m.score;
-      html += `<button class="mood-btn ${sel ? 'selected' : ''}"
-        style="background:${sel ? m.color : '#f4f4f4'};box-shadow:${sel ? `0 4px 16px ${m.color}88` : 'none'}"
-        onclick="selectMood(${m.score})">${m.emoji}</button>`;
+      html += '<button class="mood-btn ' + (sel ? 'selected' : '') + '" style="background:' + (sel ? m.color : '#f4f4f4') + ';box-shadow:' + (sel ? '0 4px 16px ' + m.color + '88' : 'none') + '" onclick="selectMood(' + m.score + ')">' + m.emoji + '</button>';
     });
-    html += `</div>`;
-    if (selectedScore) {
-      html += `<div style="margin-bottom:16px;text-align:center;font-size:13px;color:#666;font-weight:600">${mood(selectedScore).label}</div>`;
-    }
-    html += `<textarea id="comment-input" rows="2" placeholder="一言メモ（任意）"></textarea>
-      <button class="save-btn" id="save-btn" onclick="saveEntry()" ${selectedScore ? '' : 'disabled'}>記録する</button>
-    </div>`;
+    html += '</div>';
+    if (selectedScore) { html += '<div style="margin-bottom:16px;text-align:center;font-size:13px;color:#666;font-weight:600">' + mood(selectedScore).label + '</div>'; }
+    const currentComment = isEditing ? (entry && entry.comment ? entry.comment : '') : '';
+    html += '<textarea id="comment-input" rows="2" placeholder="一言メモ（任意）">' + currentComment + '</textarea><button class="save-btn" onclick="saveEntry(\'' + today + '\')" ' + (selectedScore ? '' : 'disabled') + '>' + (isEditing ? '更新する' : '記録する') + '</button>' + (isEditing ? '<button class="edit-btn" style="width:100%;margin-top:8px;text-align:center" onclick="cancelEdit()">キャンセル</button>' : '') + '</div>';
   }
-
-  // Recent
-  html += `<div class="section-label">RECENT</div>`;
-  const sorted = Object.entries(entries).sort((a,b) => b[0].localeCompare(a[0])).slice(0,5);
+  html += '<button onclick="openPastModal()" style="width:100%;padding:12px;border:2px dashed #e5e5e5;border-radius:14px;background:transparent;font-size:13px;color:#aaa;cursor:pointer;margin-bottom:16px;">＋ 過去の日付に記録する</button>';
+  html += '<div class="section-label">RECENT</div>';
+  const sorted = Object.entries(entries).sort(function(a,b){ return b[0].localeCompare(a[0]); }).slice(0,10);
   if (sorted.length === 0) {
-    html += `<div class="empty">まだ記録がありません</div>`;
+    html += '<div class="empty">まだ記録がありません</div>';
   } else {
-    sorted.forEach(([date, entry]) => {
+    sorted.forEach(function(item) {
+      const date = item[0]; const e = item[1];
       const d = new Date(date + 'T00:00:00');
-      const m = mood(entry.score);
-      html += `<div class="entry-card">
-        <span class="entry-emoji">${m.emoji}</span>
-        <div class="entry-info">
-          <div class="entry-date">${d.getMonth()+1}/${d.getDate()}（${DAYS[d.getDay()]}）</div>
-          <div class="entry-label">${m.label}</div>
-          ${entry.comment ? `<div class="entry-comment">${entry.comment}</div>` : ''}
-        </div>
-        <div class="dot" style="background:${m.color}"></div>
-      </div>`;
+      const m = mood(e.score);
+      html += '<div class="entry-card"><span class="entry-emoji">' + m.emoji + '</span><div class="entry-info"><div class="entry-date">' + (d.getMonth()+1) + '/' + d.getDate() + '（' + DAYS[d.getDay()] + '）</div><div class="entry-label">' + m.label + '</div>' + (e.comment ? '<div class="entry-comment">' + e.comment + '</div>' : '') + '</div><button class="entry-edit" onclick="openEditModal(\'' + date + '\')">✏️</button></div>';
     });
   }
   return html;
 }
-
-function selectMood(score) {
-  selectedScore = score;
-  render();
-}
-
-function saveEntry() {
+function selectMood(score) { selectedScore = score; render(); }
+function saveEntry(date) {
   if (!selectedScore) return;
-  const comment = document.getElementById('comment-input')?.value || '';
-  entries[todayStr()] = { score: selectedScore, comment };
-  saveEntries();
+  const comment = document.getElementById('comment-input') ? document.getElementById('comment-input').value : '';
+  entries[date] = { score: selectedScore, comment: comment };
+  saveEntries(); selectedScore = null; editingDate = null; closeModal(); render();
+}
+function startEdit(date) { editingDate = date; selectedScore = entries[date] ? entries[date].score : null; render(); }
+function cancelEdit() { editingDate = null; selectedScore = null; render(); }
+function openPastModal() {
   selectedScore = null;
-  render();
+  const modal = document.getElementById('modal-root');
+  let html = '<div class="modal-overlay" onclick="closeModalOutside(event)"><div class="modal"><div class="modal-title">📅 過去の日付に記録</div><input type="date" id="past-date" max="' + todayStr() + '" value="' + todayStr() + '" /><div class="mood-row">';
+  MOODS.forEach(function(m) { html += '<button class="mood-btn" style="background:#f4f4f4" onclick="selectModalMood(' + m.score + ')">' + m.emoji + '</button>'; });
+  html += '</div><textarea id="past-comment" rows="2" placeholder="一言メモ（任意）"></textarea><button class="save-btn" id="past-save-btn" onclick="savePastEntry()" disabled>記録する</button><button class="edit-btn" style="width:100%;text-align:center;margin-top:8px" onclick="closeModal()">キャンセル</button></div></div>';
+  modal.innerHTML = html;
 }
-
-function getWeekDates() {
-  const today = new Date();
-  const day = today.getDay();
-  return Array.from({length:7}, (_,i) => {
-    const d = new Date(today);
-    d.setDate(today.getDate() - day + i);
-    return d.toISOString().slice(0,10);
+function openEditModal(date) {
+  const entry = entries[date];
+  selectedScore = entry ? entry.score : null;
+  const d = new Date(date + 'T00:00:00');
+  const modal = document.getElementById('modal-root');
+  let html = '<div class="modal-overlay" onclick="closeModalOutside(event)"><div class="modal"><div class="modal-title">✏️ ' + (d.getMonth()+1) + '/' + d.getDate() + 'の記録を編集</div><div class="mood-row">';
+  MOODS.forEach(function(m) {
+    const sel = selectedScore === m.score;
+    html += '<button class="mood-btn ' + (sel ? 'selected' : '') + '" style="background:' + (sel ? m.color : '#f4f4f4') + ';box-shadow:' + (sel ? '0 4px 16px ' + m.color + '88' : 'none') + '" onclick="selectModalMood(' + m.score + ')">' + m.emoji + '</button>';
   });
+  html += '</div><textarea id="past-comment" rows="2" placeholder="一言メモ（任意）">' + (entry && entry.comment ? entry.comment : '') + '</textarea><button class="save-btn" id="past-save-btn" onclick="saveEditEntry(\'' + date + '\')" ' + (selectedScore ? '' : 'disabled') + '>更新する</button><button class="edit-btn" style="width:100%;text-align:center;margin-top:8px" onclick="closeModal()">キャンセル</button></div></div>';
+  modal.innerHTML = html;
 }
-
+function selectModalMood(score) {
+  selectedScore = score;
+  document.querySelectorAll('.modal .mood-btn').forEach(function(btn, i) {
+    const m = MOODS[i];
+    const sel = score === m.score;
+    btn.style.background = sel ? m.color : '#f4f4f4';
+    btn.style.boxShadow = sel ? '0 4px 16px ' + m.color + '88' : 'none';
+    btn.classList.toggle('selected', sel);
+  });
+  const saveBtn = document.getElementById('past-save-btn');
+  if (saveBtn) saveBtn.disabled = false;
+}
+function savePastEntry() {
+  if (!selectedScore) return;
+  const date = document.getElementById('past-date').value;
+  const comment = document.getElementById('past-comment').value;
+  entries[date] = { score: selectedScore, comment: comment };
+  saveEntries(); selectedScore = null; closeModal(); render();
+}
+function saveEditEntry(date) {
+  if (!selectedScore) return;
+  const comment = document.getElementById('past-comment').value;
+  entries[date] = { score: selectedScore, comment: comment };
+  saveEntries(); selectedScore = null; closeModal(); render();
+}
+function closeModal() { document.getElementById('modal-root').innerHTML = ''; selectedScore = null; }
+function closeModalOutside(e) { if (e.target.classList.contains('modal-overlay')) closeModal(); }
+function getWeekDates() {
+  const today = new Date(); const day = today.getDay();
+  return Array.from({length:7}, function(_,i) { const d = new Date(today); d.setDate(today.getDate() - day + i); return d.toISOString().slice(0,10); });
+}
 function getMonthDates() {
   const today = new Date();
   const days = new Date(today.getFullYear(), today.getMonth()+1, 0).getDate();
-  return Array.from({length:days}, (_,i) => {
-    const d = new Date(today.getFullYear(), today.getMonth(), i+1);
-    return d.toISOString().slice(0,10);
-  });
+  return Array.from({length:days}, function(_,i) { const d = new Date(today.getFullYear(), today.getMonth(), i+1); return d.toISOString().slice(0,10); });
 }
-
 function renderGraph(dates, title) {
   const today = todayStr();
-  const scored = dates.filter(d => entries[d]);
-  const avg = scored.length
-    ? (scored.reduce((s,d) => s + entries[d].score, 0) / scored.length).toFixed(1)
-    : null;
-
-  let html = `<div class="graph-header">
-    <div class="graph-title">${title}の気分</div>
-    ${avg ? `<div class="avg-badge">平均 ${avg}</div>` : ''}
-  </div>
-  <div class="graph-card">
-    <div class="bars" style="min-width:${dates.length * 28}px">`;
-
-  dates.forEach(date => {
-    const entry = entries[date];
-    const score = entry?.score || 0;
-    const h = score ? (score / 5) * 100 : 4;
-    const m = score ? mood(score) : null;
-    const d = new Date(date + 'T00:00:00');
-    const isToday = date === today;
-    html += `<div class="bar-col">
-      <div class="bar-emoji">${score ? m.emoji : ''}</div>
-      <div class="bar" style="height:${h}px;background:${score ? m.color : '#f0f0f0'}"></div>
-      <div class="bar-day" style="color:${isToday ? '#1c1c1c' : '#bbb'};font-weight:${isToday ? 700 : 400}">${d.getDate()}</div>
-    </div>`;
+  const scored = dates.filter(function(d){ return entries[d]; });
+  const avg = scored.length ? (scored.reduce(function(s,d){ return s + entries[d].score; }, 0) / scored.length).toFixed(1) : null;
+  let html = '<div class="graph-header"><div class="graph-title">' + title + 'の気分</div>' + (avg ? '<div class="avg-badge">平均 ' + avg + '</div>' : '') + '</div><div class="graph-card"><div class="bars" style="min-width:' + (dates.length * 28) + 'px">';
+  dates.forEach(function(date) {
+    const entry = entries[date]; const score = entry ? entry.score : 0;
+    const h = score ? (score / 5) * 100 : 4; const m = score ? mood(score) : null;
+    const d = new Date(date + 'T00:00:00'); const isToday = date === today;
+    html += '<div class="bar-col"><div class="bar-emoji">' + (score ? m.emoji : '') + '</div><div class="bar" style="height:' + h + 'px;background:' + (score ? m.color : '#f0f0f0') + '"></div><div class="bar-day" style="color:' + (isToday ? '#1c1c1c' : '#bbb') + ';font-weight:' + (isToday ? 700 : 400) + '">' + d.getDate() + '</div></div>';
   });
-
-  html += `</div>
-    <div class="mood-legend">`;
-  MOODS.forEach(m => {
-    html += `<div class="legend-item">
-      <div class="legend-emoji">${m.emoji}</div>
-      <div class="legend-num">${m.score}</div>
-    </div>`;
-  });
-  html += `</div></div>`;
-
-  if (!scored.length) {
-    html += `<div class="empty">この期間の記録がありません</div>`;
-  }
+  html += '</div><div class="mood-legend">';
+  MOODS.forEach(function(m) { html += '<div class="legend-item"><div class="legend-emoji">' + m.emoji + '</div><div class="legend-num">' + m.score + '</div></div>'; });
+  html += '</div></div>';
+  if (!scored.length) { html += '<div class="empty">この期間の記録がありません</div>'; }
   return html;
 }
-
-// PWA Install
 let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  document.getElementById('install-banner').style.display = 'flex';
-});
-
-function installApp() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => {
-      deferredPrompt = null;
-      document.getElementById('install-banner').style.display = 'none';
-    });
-  }
-}
-
-// Service Worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
-
+window.addEventListener('beforeinstallprompt', function(e) { e.preventDefault(); deferredPrompt = e; document.getElementById('install-banner').style.display = 'flex'; });
+function installApp() { if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then(function(){ deferredPrompt = null; document.getElementById('install-banner').style.display = 'none'; }); } }
+if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
 render();
 </script>
 </body>
