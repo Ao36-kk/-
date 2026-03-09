@@ -3,22 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>気分日記</title>
+  <title>自分日記</title>
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#fafaf9" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="気分日記" />
+  <meta name="apple-mobile-web-app-title" content="自分日記" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: #fafaf9;
-      font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
-      color: #1c1c1c; min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center;
-      padding-bottom: 100px;
-    }
+    body { background: #fafaf9; font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif; color: #1c1c1c; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding-bottom: 100px; }
     header { width: 100%; max-width: 480px; padding: 48px 24px 0; display: flex; justify-content: space-between; align-items: baseline; }
     .header-left .sub { font-size: 11px; letter-spacing: 3px; color: #999; text-transform: uppercase; margin-bottom: 4px; }
     .header-left .title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
@@ -46,8 +40,35 @@
     .entry-label { font-size: 13px; font-weight: 600; color: #333; }
     .entry-comment { font-size: 12px; color: #999; }
     .entry-edit { background: none; border: none; font-size: 16px; cursor: pointer; padding: 4px; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; }
     .empty { text-align: center; color: #ccc; font-size: 13px; padding: 20px 0; }
+    .penguin-card { background: linear-gradient(135deg, #e0f2fe, #f0fdf4); border-radius: 20px; padding: 20px 24px; box-shadow: 0 2px 20px rgba(0,0,0,.06); margin-bottom: 12px; display: flex; align-items: center; gap: 16px; }
+    .dolphin-card { background: linear-gradient(135deg, #ede9fe, #fce7f3); border-radius: 20px; padding: 20px 24px; box-shadow: 0 2px 20px rgba(0,0,0,.06); margin-bottom: 16px; display: flex; align-items: flex-start; gap: 16px; }
+    .mascot { font-size: 48px; animation: wobble 3s ease-in-out infinite; display: inline-block; flex-shrink: 0; }
+    @keyframes wobble { 0%,100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+    .mascot-msg { font-size: 14px; font-weight: 600; color: #334155; line-height: 1.6; }
+    .mascot-sub { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+    .dolphin-type { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; background: #ddd6fe; color: #6d28d9; margin-bottom: 6px; }
+    .dolphin-word { font-size: 16px; font-weight: 700; color: #1c1c1c; margin-bottom: 2px; }
+    .dolphin-reading { font-size: 11px; color: #94a3b8; margin-bottom: 6px; }
+    .dolphin-meaning { font-size: 13px; color: #475569; line-height: 1.5; }
+    .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .calendar-title { font-size: 16px; font-weight: 700; }
+    .cal-nav { background: #f4f4f4; border: none; border-radius: 8px; padding: 6px 12px; font-size: 14px; cursor: pointer; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 8px; }
+    .cal-day-label { text-align: center; font-size: 11px; color: #aaa; padding: 4px 0; font-weight: 600; }
+    .cal-day { aspect-ratio: 1; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; background: #f9f9f9; border: none; transition: all .15s; }
+    .cal-day.today { box-shadow: 0 0 0 2px #1c1c1c; }
+    .cal-day.empty { background: transparent; cursor: default; }
+    .cal-day .cal-emoji { font-size: 16px; }
+    .cal-day .cal-num { font-size: 10px; color: #999; }
+    .cal-day.today .cal-num { color: #1c1c1c; font-weight: 700; }
+    .detail-card { background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 2px 20px rgba(0,0,0,.08); margin-bottom: 16px; display: flex; gap: 16px; align-items: flex-start; }
+    .detail-emoji { font-size: 40px; }
+    .detail-info { flex: 1; }
+    .detail-date { font-size: 12px; color: #aaa; margin-bottom: 4px; }
+    .detail-label { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .detail-comment { font-size: 13px; color: #666; line-height: 1.5; }
+    .detail-empty { font-size: 13px; color: #ccc; }
     .graph-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
     .graph-title { font-size: 16px; font-weight: 700; }
     .avg-badge { background: #fff; border-radius: 20px; padding: 4px 14px; font-size: 13px; font-weight: 700; box-shadow: 0 1px 8px rgba(0,0,0,.06); }
@@ -66,11 +87,6 @@
     .recorded-sub { font-size: 13px; color: #999; margin-bottom: 2px; }
     .recorded-label { font-size: 18px; font-weight: 700; }
     .recorded-comment { font-size: 13px; color: #666; margin-top: 4px; }
-    .penguin-card { background: linear-gradient(135deg, #e0f2fe, #f0fdf4); border-radius: 20px; padding: 20px 24px; box-shadow: 0 2px 20px rgba(0,0,0,.06); margin-bottom: 16px; display: flex; align-items: center; gap: 16px; }
-    .penguin { font-size: 52px; animation: wobble 3s ease-in-out infinite; display: inline-block; }
-    @keyframes wobble { 0%,100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
-    .penguin-msg { font-size: 14px; font-weight: 600; color: #334155; line-height: 1.6; }
-    .penguin-sub { font-size: 12px; color: #94a3b8; margin-top: 2px; }
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); display: flex; align-items: flex-end; justify-content: center; z-index: 200; }
     .modal { background: #fff; border-radius: 24px 24px 0 0; padding: 28px 24px 48px; width: 100%; max-width: 480px; }
     .modal-title { font-size: 16px; font-weight: 700; margin-bottom: 20px; }
@@ -82,15 +98,15 @@
 <body>
 <header>
   <div class="header-left">
-    <div class="sub">Mood Diary</div>
-    <div class="title">気分日記</div>
+    <div class="sub">My Diary</div>
+    <div class="title">自分日記</div>
   </div>
   <div class="header-date" id="header-date"></div>
 </header>
 <nav>
   <button class="active" onclick="showView('home')">今日</button>
-  <button onclick="showView('week')">週</button>
-  <button onclick="showView('month')">月</button>
+  <button onclick="showView('calendar')">カレンダー</button>
+  <button onclick="showView('graph')">グラフ</button>
 </nav>
 <main id="main"></main>
 <div id="modal-root"></div>
@@ -102,167 +118,76 @@
   </div>
 </div>
 <script>
-const MOODS = [
-  { score: 1, emoji: "😔", label: "つらい",   color: "#94a3b8" },
-  { score: 2, emoji: "😕", label: "イマイチ", color: "#93c5fd" },
-  { score: 3, emoji: "😐", label: "普通",     color: "#6ee7b7" },
-  { score: 4, emoji: "🙂", label: "良い",     color: "#fcd34d" },
-  { score: 5, emoji: "😄", label: "最高！",   color: "#f9a8d4" },
-];
-const DAYS = ["日","月","火","水","木","金","土"];
-const MONTHS = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"];
-const PENGUIN_MSGS = [
-  "今日もお疲れ様です！",
-  "今日も一日よく頑張りました！",
-  "ゆっくり休んでくださいね",
-  "あなたのこと、応援しています！",
-  "今日も生きてくれてありがとう",
-  "小さなことも、ちゃんと頑張ってるよ！",
-  "今日の自分を褒めてあげてね",
-];
-let currentView = 'home';
-let selectedScore = null;
-let editingDate = null;
-let entries = JSON.parse(localStorage.getItem('mood-entries') || '{}');
-function todayStr() { return new Date().toISOString().slice(0,10); }
-function mood(score) { return MOODS.find(m => m.score === score); }
-function saveEntries() { localStorage.setItem('mood-entries', JSON.stringify(entries)); }
-function getPenguinMsg() { const day = new Date().getDate(); return PENGUIN_MSGS[day % PENGUIN_MSGS.length]; }
-const now = new Date();
-document.getElementById('header-date').textContent = now.getFullYear() + "年" + MONTHS[now.getMonth()] + now.getDate() + "日";
-function showView(v) {
-  currentView = v;
-  document.querySelectorAll('nav button').forEach((btn, i) => { btn.classList.toggle('active', ['home','week','month'][i] === v); });
-  render();
-}
-function render() {
-  const main = document.getElementById('main');
-  if (currentView === 'home') main.innerHTML = renderHome();
-  else if (currentView === 'week') main.innerHTML = renderGraph(getWeekDates(), '今週');
-  else main.innerHTML = renderGraph(getMonthDates(), MONTHS[new Date().getMonth()]);
-}
-function renderHome() {
-  const today = todayStr();
-  const entry = entries[today];
-  let html = '';
-  html += '<div class="penguin-card"><div class="penguin">🐧</div><div><div class="penguin-msg">' + getPenguinMsg() + '</div><div class="penguin-sub">' + (now.getMonth()+1) + '月' + now.getDate() + '日（' + DAYS[now.getDay()] + '）</div></div></div>';
-  if (entry && editingDate !== today) {
-    const m = mood(entry.score);
-    html += '<div class="card"><div class="recorded-card"><span class="recorded-emoji">' + m.emoji + '</span><div style="flex:1"><div class="recorded-sub">今日の気分</div><div class="recorded-label">' + m.label + '</div>' + (entry.comment ? '<div class="recorded-comment">' + entry.comment + '</div>' : '') + '</div></div><button class="edit-btn" onclick="startEdit(\'' + today + '\')">✏️ 編集する</button></div>';
-  } else {
-    const isEditing = editingDate === today;
-    html += '<div class="card"><div style="font-size:14px;color:#999;margin-bottom:20px;text-align:center">' + (isEditing ? '今日の気分を編集' : '今日の気分はどうですか？') + '</div><div class="mood-row">';
-    MOODS.forEach(function(m) {
-      const sel = selectedScore === m.score;
-      html += '<button class="mood-btn ' + (sel ? 'selected' : '') + '" style="background:' + (sel ? m.color : '#f4f4f4') + ';box-shadow:' + (sel ? '0 4px 16px ' + m.color + '88' : 'none') + '" onclick="selectMood(' + m.score + ')">' + m.emoji + '</button>';
-    });
-    html += '</div>';
-    if (selectedScore) { html += '<div style="margin-bottom:16px;text-align:center;font-size:13px;color:#666;font-weight:600">' + mood(selectedScore).label + '</div>'; }
-    const currentComment = isEditing ? (entry && entry.comment ? entry.comment : '') : '';
-    html += '<textarea id="comment-input" rows="2" placeholder="一言メモ（任意）">' + currentComment + '</textarea><button class="save-btn" onclick="saveEntry(\'' + today + '\')" ' + (selectedScore ? '' : 'disabled') + '>' + (isEditing ? '更新する' : '記録する') + '</button>' + (isEditing ? '<button class="edit-btn" style="width:100%;margin-top:8px;text-align:center" onclick="cancelEdit()">キャンセル</button>' : '') + '</div>';
-  }
-  html += '<button onclick="openPastModal()" style="width:100%;padding:12px;border:2px dashed #e5e5e5;border-radius:14px;background:transparent;font-size:13px;color:#aaa;cursor:pointer;margin-bottom:16px;">＋ 過去の日付に記録する</button>';
-  html += '<div class="section-label">RECENT</div>';
-  const sorted = Object.entries(entries).sort(function(a,b){ return b[0].localeCompare(a[0]); }).slice(0,10);
-  if (sorted.length === 0) {
-    html += '<div class="empty">まだ記録がありません</div>';
-  } else {
-    sorted.forEach(function(item) {
-      const date = item[0]; const e = item[1];
-      const d = new Date(date + 'T00:00:00');
-      const m = mood(e.score);
-      html += '<div class="entry-card"><span class="entry-emoji">' + m.emoji + '</span><div class="entry-info"><div class="entry-date">' + (d.getMonth()+1) + '/' + d.getDate() + '（' + DAYS[d.getDay()] + '）</div><div class="entry-label">' + m.label + '</div>' + (e.comment ? '<div class="entry-comment">' + e.comment + '</div>' : '') + '</div><button class="entry-edit" onclick="openEditModal(\'' + date + '\')">✏️</button></div>';
-    });
-  }
+const MOODS=[{score:1,emoji:"😔",label:"つらい",color:"#94a3b8"},{score:2,emoji:"😕",label:"イマイチ",color:"#93c5fd"},{score:3,emoji:"😐",label:"普通",color:"#6ee7b7"},{score:4,emoji:"🙂",label:"良い",color:"#fcd34d"},{score:5,emoji:"😄",label:"最高！",color:"#f9a8d4"}];
+const DAYS=["日","月","火","水","木","金","土"];
+const MONTHS=["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"];
+const PENGUIN_MSGS=["今日もお疲れ様！ゆっくり休んでね🐧","あなたが頑張ってること、ちゃんと知ってるよ！","今日も生きてくれてありがとう🐧","小さな一歩も、立派な前進だよ！","今日の自分を、ちゃんと褒めてあげてね🐧","うまくいかない日があっても大丈夫！","あなたのペースで進めばいい🐧","今日も一日、本当によく頑張ったね！","笑顔でいられる日も、そうじゃない日も、全部あなたらしさだよ🐧","無理しないで、今日はゆっくりしよう！","あなたがいるだけで、世界は少し明るくなってるよ🐧","悩んでいい。迷っていい。それが人間だもん！","今日も小さな幸せを見つけられたかな？🐧","失敗しても大丈夫、また明日がある！","あなたのことを応援してる人がいるよ🐧","深呼吸して、今日も一緒に乗り越えよう！","どんな日でも、記録することが大切だよ🐧","今日という日は、二度と来ない特別な日だよ！","自分に優しくすることを忘れないでね🐧","今日もここに来てくれてありがとう！","完璧じゃなくていい、あなたのままで十分だよ🐧","今日も一緒にいられて嬉しいな！","つらい時は、無理せず立ち止まっていいよ🐧","あなたの努力は、きっと実を結ぶよ！","今日も空を見上げてみた？🐧","どんな小さなことでも、やり遂げたことを誇りに思って！","あなたの笑顔が見たいな🐧","今日も一日、よく生き抜いたね！","自分を大切にすることは、わがままじゃないよ🐧","ゆっくりでいい、着実に進もう！","今日の頑張りは、未来の自分への贈り物だよ🐧","悲しい日があっても、明日は新しい一日が始まるよ！","あなたには無限の可能性があるよ🐧","今日も何か一つ、楽しいことを見つけてね！","どんな時も、あなたの味方でいるよ🐧","今日の困難は、明日の強さになるよ！","自分のペースを大切にしてね🐧","今日もちゃんと食べられた？身体を大切に！","あなたの存在そのものが、素晴らしいよ🐧","今日も夢に向かって一歩踏み出せたね！","休むことも、大切な仕事だよ🐧","今日のあなたは、昨日より少し成長してるよ！","どんな感情も、大切に受け止めてあげてね🐧","今日も太陽が昇った。それだけで十分素晴らしい！","あなたの頑張りを、ずっと見てるよ🐧","今日も心の声に耳を傾けてね！","失敗は成功のもと。諦めないで🐧","今日も誰かの笑顔を作れたかな？","あなたがいるだけで、周りが幸せになるよ🐧","今日も一歩一歩、着実に前へ！","つらい時こそ、自分を褒めてあげて🐧","今日の積み重ねが、未来を作るよ！","どんな日も、あなたはあなたの主役だよ🐧","今日も感謝の気持ちを忘れずに！","あなたの可能性は、まだまだ広がってるよ🐧","今日も自分らしく輝いてね！","小さな幸せが、毎日の力になるよ🐧","今日も挑戦したこと、すごいね！","あなたの心が、いつも穏やかでありますように🐧","今日も前を向いて歩けたね！","どんな道も、一歩から始まるよ🐧","今日も自分の感情に正直でいてね！","あなたの笑顔は、周りを明るくするよ🐧","今日も新しい発見があったかな？","諦めなければ、夢は必ず叶うよ🐧","今日も水をたくさん飲んでね！","あなたの頑張りは、無駄にならないよ🐧","今日も誰かに優しくできたね！","自分を信じる力が、一番の武器だよ🐧","今日も素直な気持ちを大切にね！","あなたの存在が、世界を豊かにしてるよ🐧","今日も挫けそうになっても立ち上がれたね！","どんな困難も、必ず乗り越えられるよ🐧","今日も自分の夢を信じてね！","あなたの優しさが、誰かの支えになってるよ🐧","今日も一日、よく頑張った！ゆっくり休んでね","どんなあなたも、愛されてるよ🐧","今日の経験が、あなたを強くするよ！","あなたのペースで、着実に進もうね🐧","今日も自分を大切に、愛してあげてね！","小さな積み重ねが、大きな力になるよ🐧","今日も笑顔を忘れずに！","あなたの努力は、必ず報われるよ🐧","今日も前進できたね！それだけで十分！","どんな時も、希望を持ち続けてね🐧","今日も心が軽くなりますように！","あなたのそのままが、一番素敵だよ🐧","今日も新しい挑戦をした勇気、すごいね！","休んでもいい、また立ち上がればいい🐧","今日も周りへの感謝を忘れずに！","あなたの笑顔が、今日も誰かを救ってるよ🐧","今日も自分の限界を少し超えられたね！","どんな結果でも、挑戦したことが大事だよ🐧","今日も自分の気持ちを大切にね！","あなたがいるだけで、今日も良い日だよ🐧","今日も一つ、できることが増えたね！","焦らなくていい、あなたのタイミングがある🐧","今日も心の声に従って生きてね！","あなたの毎日が、輝いていますように🐧"];
+const DOLPHIN_MSGS=[{type:"四字熟語",word:"一期一会",reading:"いちごいちえ",meaning:"一生に一度の出会いを大切にすること"},{type:"名言",word:"千里の道も一歩から",reading:"",meaning:"どんな大きな目標も、まず一歩踏み出すことから始まる"},{type:"慣用句",word:"石の上にも三年",reading:"",meaning:"辛くても辛抱強く続ければ、いつか必ず報われる"},{type:"四字熟語",word:"臥薪嘗胆",reading:"がしんしょうたん",meaning:"目的のために苦労を重ね、努力し続けること"},{type:"名言",word:"失敗は成功のもと",reading:"",meaning:"失敗を重ねることで、成功への道が開ける"},{type:"四字熟語",word:"七転八起",reading:"しちてんはっき",meaning:"何度失敗しても諦めずに立ち上がること"},{type:"慣用句",word:"継続は力なり",reading:"",meaning:"何事も続けることで、大きな力が生まれる"},{type:"四字熟語",word:"初志貫徹",reading:"しょしかんてつ",meaning:"最初に決めた志を最後まで貫き通すこと"},{type:"名言",word:"案ずるより産むが易し",reading:"",meaning:"心配するより実際にやってみると意外と簡単なことが多い"},{type:"四字熟語",word:"温故知新",reading:"おんこちしん",meaning:"古いことを学び、そこから新しい知識を得ること"},{type:"慣用句",word:"急がば回れ",reading:"",meaning:"急ぐ時こそ、安全で確実な方法を選ぶべき"},{type:"四字熟語",word:"以心伝心",reading:"いしんでんしん",meaning:"言葉がなくても、心が通じ合うこと"},{type:"名言",word:"明日は明日の風が吹く",reading:"",meaning:"将来のことは心配せず、今日のことに集中しよう"},{type:"四字熟語",word:"自業自得",reading:"じごうじとく",meaning:"自分の行いの結果は、自分に返ってくる"},{type:"慣用句",word:"七転び八起き",reading:"",meaning:"何度倒れても、また立ち上がる強さを持つこと"},{type:"四字熟語",word:"一石二鳥",reading:"いっせきにちょう",meaning:"一つの行動で二つの利益を得ること"},{type:"名言",word:"塵も積もれば山となる",reading:"",meaning:"小さなことでも積み重ねると、大きな成果になる"},{type:"四字熟語",word:"切磋琢磨",reading:"せっさたくま",meaning:"互いに励まし合い、共に成長すること"},{type:"慣用句",word:"備えあれば憂いなし",reading:"",meaning:"日頃から準備しておけば、いざという時に困らない"},{type:"四字熟語",word:"日進月歩",reading:"にっしんげっぽ",meaning:"毎日毎月、絶えず進歩し続けること"},{type:"名言",word:"光陰矢の如し",reading:"",meaning:"月日が経つのは矢のように早い。時間を大切に"},{type:"四字熟語",word:"不撓不屈",reading:"ふとうふくつ",meaning:"どんな困難にもめげず、屈しない強い意志"},{type:"慣用句",word:"百聞は一見に如かず",reading:"",meaning:"何度も聞くよりも、一度実際に見る方が確かだ"},{type:"四字熟語",word:"花鳥風月",reading:"かちょうふうげつ",meaning:"自然の美しい景色。日常の中に美を見つけること"},{type:"名言",word:"終わりよければすべてよし",reading:"",meaning:"最後がうまくいけば、途中の苦労も報われる"},{type:"四字熟語",word:"一致団結",reading:"いっちだんけつ",meaning:"みんなが心を一つにして、力を合わせること"},{type:"慣用句",word:"笑う門には福来たる",reading:"",meaning:"いつも明るく笑っていれば、自然と幸せがやってくる"},{type:"四字熟語",word:"精進努力",reading:"しょうじんどりょく",meaning:"一心に努力し、精を出して励むこと"},{type:"名言",word:"人生に無駄なことは何もない",reading:"",meaning:"どんな経験も、いつか必ず役に立つ"},{type:"四字熟語",word:"山川草木",reading:"さんせんそうもく",meaning:"大自然のすべて。自然の豊かさを表す言葉"},{type:"慣用句",word:"良薬は口に苦し",reading:"",meaning:"本当に役に立つ忠告は、聞きづらいことが多い"},{type:"四字熟語",word:"泰然自若",reading:"たいぜんじじゃく",meaning:"どんな状況でも落ち着いて、動じないこと"},{type:"名言",word:"志があるところに道は開ける",reading:"",meaning:"強い意志があれば、必ず道は切り開かれる"},{type:"四字熟語",word:"勇往邁進",reading:"ゆうおうまいしん",meaning:"勇気を持って、ひたすら前進すること"},{type:"慣用句",word:"時は金なり",reading:"",meaning:"時間はお金と同じくらい貴重なもの。大切に使おう"},{type:"四字熟語",word:"知行合一",reading:"ちこうごういつ",meaning:"知識と行動は一体であり、実践してこそ真の知識になる"},{type:"名言",word:"艱難汝を玉にす",reading:"",meaning:"苦労や困難があってこそ、人は磨かれ成長する"},{type:"四字熟語",word:"喜怒哀楽",reading:"きどあいらく",meaning:"人間のすべての感情。感情を大切に生きること"},{type:"慣用句",word:"習うより慣れよ",reading:"",meaning:"教わるより、実際に経験して身につける方が大切"},{type:"四字熟語",word:"異口同音",reading:"いくどうおん",meaning:"多くの人が同じことを言うこと"},{type:"名言",word:"井の中の蛙大海を知らず",reading:"",meaning:"狭い世界だけを知り、広い世界があることを知らないこと"},{type:"四字熟語",word:"粉骨砕身",reading:"ふんこつさいしん",meaning:"力の限り、身を削って努力すること"},{type:"慣用句",word:"転んでもただでは起きるな",reading:"",meaning:"失敗しても、そこから何かを学んで立ち上がれ"},{type:"四字熟語",word:"山紫水明",reading:"さんしすいめい",meaning:"山と川の景色が美しく清らかなこと"},{type:"名言",word:"七難八苦",reading:"",meaning:"さまざまな苦しみや困難のこと。乗り越えた先に強さがある"},{type:"四字熟語",word:"独立自尊",reading:"どくりつじそん",meaning:"他に頼らず、自分の力で立ち、自分を尊重すること"},{type:"慣用句",word:"果報は寝て待て",reading:"",meaning:"幸運は焦らず、のんびり待っていれば来るものだ"},{type:"四字熟語",word:"意志薄弱",reading:"いしはくじゃく",meaning:"意志が弱いこと。自分の意志を強く持とう"},{type:"名言",word:"為せば成る",reading:"",meaning:"やろうと決意して努力すれば、何事も成し遂げられる"},{type:"四字熟語",word:"臨機応変",reading:"りんきおうへん",meaning:"状況に応じて柔軟に対応すること"},{type:"慣用句",word:"負けるが勝ち",reading:"",meaning:"時には負けを認めることが、長い目で見ると賢明なこと"},{type:"四字熟語",word:"試行錯誤",reading:"しこうさくご",meaning:"失敗を繰り返しながら、最善の方法を見つけること"},{type:"名言",word:"過去は変えられないが、未来は変えられる",reading:"",meaning:"今からの行動で、これからの人生はいくらでも変わる"},{type:"四字熟語",word:"先憂後楽",reading:"せんゆうこうらく",meaning:"苦労を先にして、後で楽しむこと"},{type:"慣用句",word:"好きこそものの上手なれ",reading:"",meaning:"好きなことは自然と上達するもの"},{type:"四字熟語",word:"和光同塵",reading:"わこうどうじん",meaning:"自分の才能を隠し、世間の人々と同じように生きること"},{type:"名言",word:"柔よく剛を制す",reading:"",meaning:"柔らかいものが、かたいものに勝ることがある"},{type:"四字熟語",word:"明鏡止水",reading:"めいきょうしすい",meaning:"心が澄み切って、静かに落ち着いている状態"},{type:"慣用句",word:"情けは人の為ならず",reading:"",meaning:"人に親切にすることは、回り回って自分のためになる"},{type:"四字熟語",word:"春夏秋冬",reading:"しゅんかしゅうとう",meaning:"四つの季節。人生のあらゆる場面を表すこともある"},{type:"名言",word:"人の振り見て我が振り直せ",reading:"",meaning:"他人の行動を見て、自分の行動を反省しよう"},{type:"四字熟語",word:"因果応報",reading:"いんがおうほう",meaning:"良いことをすれば良い結果が、悪いことをすれば悪い結果が返る"},{type:"慣用句",word:"三人寄れば文殊の知恵",reading:"",meaning:"凡人でも三人集まれば、良い知恵が生まれる"},{type:"四字熟語",word:"誠心誠意",reading:"せいしんせいい",meaning:"真心を込めて、真剣に取り組むこと"},{type:"名言",word:"千載一遇",reading:"",meaning:"千年に一度という、めったにない良い機会のこと"},{type:"四字熟語",word:"起死回生",reading:"きしかいせい",meaning:"絶望的な状況から、再び立ち直ること"},{type:"慣用句",word:"虎穴に入らずんば虎子を得ず",reading:"",meaning:"危険を冒さなければ、大きな成果は得られない"},{type:"四字熟語",word:"天真爛漫",reading:"てんしんらんまん",meaning:"純粋で無邪気、飾り気がなく明るいこと"},{type:"名言",word:"我思う、ゆえに我あり",reading:"デカルト",meaning:"考えているという事実が、自分の存在を証明する"},{type:"四字熟語",word:"質実剛健",reading:"しつじつごうけん",meaning:"飾り気がなく真面目で、心身ともに強いこと"},{type:"慣用句",word:"鉄は熱いうちに打て",reading:"",meaning:"やる気があるうちに、すぐに行動することが大切"},{type:"四字熟語",word:"有言実行",reading:"ゆうげんじっこう",meaning:"言ったことは必ず実行に移すこと"},{type:"名言",word:"知は力なり",reading:"ベーコン",meaning:"知識を持つことが、大きな力になる"},{type:"四字熟語",word:"大器晩成",reading:"たいきばんせい",meaning:"大きな人物は、時間をかけて大成するもの"},{type:"慣用句",word:"類は友を呼ぶ",reading:"",meaning:"似た性格や考えの人は、自然と集まるもの"},{type:"四字熟語",word:"五里霧中",reading:"ごりむちゅう",meaning:"物事の見通しが立たず、迷っている状態"},{type:"名言",word:"人生は旅である",reading:"",meaning:"人生は目的地ではなく、旅の過程そのものに価値がある"},{type:"四字熟語",word:"一念発起",reading:"いちねんほっき",meaning:"決意を固め、新たな目標に向けて立ち上がること"},{type:"慣用句",word:"雨降って地固まる",reading:"",meaning:"困難や揉め事の後は、かえって状況が良くなることがある"},{type:"四字熟語",word:"文武両道",reading:"ぶんぶりょうどう",meaning:"学問と武道、両方に優れていること"},{type:"名言",word:"行動こそが全てを変える",reading:"",meaning:"考えるだけでなく、実際に動くことで現実が変わる"},{type:"四字熟語",word:"心機一転",reading:"しんきいってん",meaning:"気持ちをリセットして、新たな気持ちで出発すること"},{type:"慣用句",word:"縁の下の力持ち",reading:"",meaning:"表に出ずに、陰から支える大切な存在のこと"},{type:"四字熟語",word:"一心不乱",reading:"いっしんふらん",meaning:"一つのことに集中して、他のことを考えない状態"},{type:"名言",word:"己を知り、敵を知れば百戦危うからず",reading:"孫子",meaning:"自分と相手をよく知れば、どんな戦いにも負けない"},{type:"四字熟語",word:"栄枯盛衰",reading:"えいこせいすい",meaning:"栄えたり衰えたりすること。物事には変化がある"},{type:"慣用句",word:"猿も木から落ちる",reading:"",meaning:"どんなに得意なことでも、失敗することがある"},{type:"四字熟語",word:"疾風怒濤",reading:"しっぷうどとう",meaning:"激しく荒れ狂う状況。困難な状況のこと"},{type:"名言",word:"最大の栄光は転ばないことではなく、転ぶたびに起き上がることにある",reading:"ゴールドスミス",meaning:"失敗しないことより、失敗から立ち上がることが大切"},{type:"四字熟語",word:"意気揚揚",reading:"いきようよう",meaning:"得意そうにして、元気いっぱいな様子"},{type:"慣用句",word:"花より団子",reading:"",meaning:"外見の美しさより、実際の利益や実用性を好むこと"},{type:"四字熟語",word:"自由自在",reading:"じゆうじざい",meaning:"何にも縛られず、思いのままに行動できること"},{type:"名言",word:"夢なき者に理想なし",reading:"吉田松陰",meaning:"夢を持たない人には、大きな目標も生まれない"},{type:"四字熟語",word:"波乱万丈",reading:"はらんばんじょう",meaning:"変化が激しく、山あり谷ありの人生"},{type:"慣用句",word:"七つの海を渡る",reading:"",meaning:"世界中を巡り、広い経験を積むこと"},{type:"四字熟語",word:"融通無碍",reading:"ゆうずうむげ",meaning:"何にも囚われず、自由に対応できること"},{type:"名言",word:"人間万事塞翁が馬",reading:"",meaning:"人生の幸不幸は予測できない。悪いことが後で良いことに変わることもある"},{type:"四字熟語",word:"磨斧作針",reading:"まふさくしん",meaning:"忍耐強く努力すれば、困難なことも成し遂げられる"},{type:"慣用句",word:"蛙の子は蛙",reading:"",meaning:"子は親に似るもの。しかし、努力次第で変えられる"},{type:"四字熟語",word:"起承転結",reading:"きしょうてんけつ",meaning:"物事の構成の基本。始まり、展開、転換、結論"},{type:"名言",word:"旅は道連れ、世は情け",reading:"",meaning:"旅には仲間が必要なように、人生も助け合いが大切"},{type:"四字熟語",word:"和而不同",reading:"わじふどう",meaning:"調和しながらも、自分の意見を持つこと"},{type:"慣用句",word:"出る杭は打たれる",reading:"",meaning:"目立つ人は批判されやすい。でも、それでも輝き続けて"},{type:"四字熟語",word:"天下無双",reading:"てんかむそう",meaning:"この世に並ぶものがないほど、優れていること"},{type:"名言",word:"すべての偉大なことは、小さなことから始まる",reading:"",meaning:"どんな大きな成果も、小さな一歩から生まれる"},{type:"四字熟語",word:"百折不撓",reading:"ひゃくせつふとう",meaning:"何度くじけても諦めず、立ち向かい続けること"},{type:"慣用句",word:"船頭多くして船山に登る",reading:"",meaning:"指導者が多すぎると、物事がうまくいかなくなる"},{type:"四字熟語",word:"一望千里",reading:"いちぼうせんり",meaning:"広く遠くまで見渡せる、雄大な景色のこと"},{type:"名言",word:"困難の中に機会がある",reading:"アインシュタイン",meaning:"ピンチの中にこそ、チャンスが隠れている"},{type:"四字熟語",word:"前途洋洋",reading:"ぜんとようよう",meaning:"将来に大きな希望が広がっている状態"},{type:"慣用句",word:"石橋を叩いて渡る",reading:"",meaning:"慎重に確認してから行動すること"},{type:"四字熟語",word:"新陳代謝",reading:"しんちんたいしゃ",meaning:"古いものが新しいものに入れ替わること"},{type:"名言",word:"人生は一冊の書物に似ている",reading:"",meaning:"旅をしない人は、最初のページしか読まないのと同じ"},{type:"四字熟語",word:"用意周到",reading:"よういしゅうとう",meaning:"準備が完全に整っていること"},{type:"慣用句",word:"善は急げ",reading:"",meaning:"良いと思ったことは、すぐに行動に移そう"},{type:"四字熟語",word:"電光石火",reading:"でんこうせっか",meaning:"動きが非常に速いこと"},{type:"名言",word:"真の友情は第二の自己である",reading:"アリストテレス",meaning:"本当の友人は、もう一人の自分のような存在だ"},{type:"四字熟語",word:"名実相伴",reading:"めいじつあいともなう",meaning:"名声と実力が一致していること"},{type:"慣用句",word:"情けは人のためならず",reading:"",meaning:"人への親切は、巡り巡って自分に返ってくる"},{type:"四字熟語",word:"千思万考",reading:"せんしばんこう",meaning:"何度も深く考えること"},{type:"名言",word:"幸福は、あなたが思うことから始まる",reading:"",meaning:"幸せは外にあるのではなく、考え方で生まれるもの"},{type:"四字熟語",word:"古今東西",reading:"ここんとうざい",meaning:"古今東西の全て。あらゆる時代と場所を指す"},{type:"慣用句",word:"目には目を",reading:"",meaning:"やられたことに対して、同じように返すこと"},{type:"四字熟語",word:"勤倹尚武",reading:"きんけんしょうぶ",meaning:"勤勉で倹約し、武道を重んじること"},{type:"名言",word:"始まりはいつも今",reading:"",meaning:"過去を嘆くより、今この瞬間から始めよう"},{type:"四字熟語",word:"天衣無縫",reading:"てんいむほう",meaning:"自然で飾り気がなく、完璧な美しさのこと"},{type:"慣用句",word:"転ばぬ先の杖",reading:"",meaning:"失敗する前に、あらかじめ準備や対策をしておくこと"},{type:"四字熟語",word:"破竹之勢",reading:"はちくのいきおい",meaning:"竹が割れるような、止めがたい勢いのこと"},{type:"名言",word:"変化こそが唯一の不変の法則",reading:"ヘラクレイトス",meaning:"世の中は常に変化している。変化を恐れず受け入れよう"},{type:"四字熟語",word:"無我夢中",reading:"むがむちゅう",meaning:"何かに夢中になり、我を忘れること"},{type:"慣用句",word:"待てば海路の日和あり",reading:"",meaning:"辛抱強く待てば、必ずチャンスが来る"},{type:"四字熟語",word:"才色兼備",reading:"さいしょくけんび",meaning:"才能と美しさの両方を兼ね備えていること"},{type:"名言",word:"希望は目覚めている人の夢である",reading:"アリストテレス",meaning:"夢を持ち続け、行動する人だけが希望を実現できる"},{type:"慣用句",word:"芸は身を助ける",reading:"",meaning:"身につけた技術や知識は、困った時に役に立つ"},{type:"四字熟語",word:"千変万化",reading:"せんぺんばんか",meaning:"さまざまに変化すること"},{type:"名言",word:"人生とは、自転車に乗るようなもの",reading:"アインシュタイン",meaning:"バランスを保つためには、動き続けなければならない"},{type:"四字熟語",word:"山高水長",reading:"さんこうすいちょう",meaning:"山が高く水が長いように、徳が高く名声が長く続くこと"},{type:"名言",word:"知恵は経験から生まれる",reading:"",meaning:"本当の知恵は、実際の経験の中から学ぶことで得られる"},{type:"四字熟語",word:"純真無垢",reading:"じゅんしんむく",meaning:"心が純粋で汚れがなく、無邪気なこと"},{type:"慣用句",word:"弘法も筆の誤り",reading:"",meaning:"どんな達人でも、時には失敗することがある"},{type:"四字熟語",word:"随処作主",reading:"ずいしょさくしゅ",meaning:"どんな場所でも、主体的に行動すること"},{type:"名言",word:"自分を信じることから全ては始まる",reading:"",meaning:"自信を持つことが、成功への第一歩"},{type:"四字熟語",word:"鶏鳴狗盗",reading:"けいめいくとう",meaning:"どんな小さな才能でも、役に立つ時がある"},{type:"慣用句",word:"喉元過ぎれば熱さを忘れる",reading:"",meaning:"苦しいことも、過ぎれば忘れてしまいがち。感謝を忘れずに"},{type:"四字熟語",word:"順風満帆",reading:"じゅんぷうまんぱん",meaning:"物事が順調に進んでいる状態"},{type:"名言",word:"最も暗い夜の後には、最も明るい夜明けが来る",reading:"",meaning:"どんなに辛い時も、必ず明るい未来が待っている"},{type:"四字熟語",word:"深謀遠慮",reading:"しんぼうえんりょ",meaning:"深く考え、先のことまで見通して計画すること"},{type:"慣用句",word:"目は口ほどにものを言う",reading:"",meaning:"目は言葉と同じくらい、気持ちを表す"},{type:"四字熟語",word:"剛毅果断",reading:"ごうきかだん",meaning:"意志が強く、決断力があること"},{type:"名言",word:"人の幸せを願える人が、一番幸せになれる",reading:"",meaning:"他者の幸せを思える心が、自分の幸せにもつながる"},{type:"四字熟語",word:"一朝一夕",reading:"いっちょういっせき",meaning:"ごく短い時間のこと。大事なことは時間をかけよう"},{type:"慣用句",word:"立つ鳥跡を濁さず",reading:"",meaning:"去る時は、後始末をきちんとして立ち去ること"},{type:"四字熟語",word:"万里一空",reading:"ばんりいっくう",meaning:"どこまでも同じ空が広がるように、心を一つに持ち続けること"},{type:"名言",word:"今日できることを明日に延ばすな",reading:"",meaning:"先延ばしにせず、今すぐ行動することが大切"},{type:"四字熟語",word:"疑心暗鬼",reading:"ぎしんあんき",meaning:"疑いの気持ちを持つと、何でもないものまで怖く見える"},{type:"慣用句",word:"聞くは一時の恥、聞かぬは一生の恥",reading:"",meaning:"わからないことはその場で聞く方が、後悔しない"},{type:"四字熟語",word:"絶体絶命",reading:"ぜったいぜつめい",meaning:"逃げ場のない危機的状況。それでも諦めなければ道は開ける"},{type:"名言",word:"自分の可能性を信じる力が、奇跡を生む",reading:"",meaning:"自分を信じ続ける力が、不可能を可能にする"},{type:"四字熟語",word:"百花繚乱",reading:"ひゃっかりょうらん",meaning:"多くの才能や個性が輝いている様子"},{type:"慣用句",word:"大山鳴動して鼠一匹",reading:"",meaning:"大げさな前振りの割に、結果は小さいこと"},{type:"名言",word:"幸せとは、感謝できることを見つけること",reading:"",meaning:"小さなことに感謝できる心が、幸せを引き寄せる"},{type:"四字熟語",word:"百戦錬磨",reading:"ひゃくせんれんま",meaning:"多くの経験を積んで、鍛えられていること"},{type:"慣用句",word:"急いては事を仕損じる",reading:"",meaning:"焦って行動すると、失敗しやすい。落ち着いて進もう"},{type:"四字熟語",word:"一陽来復",reading:"いちようらいふく",meaning:"冬が終わり春が来るように、悪いことの後に良いことが来る"},{type:"名言",word:"笑顔は世界共通の言語だ",reading:"チャップリン",meaning:"笑顔は言葉を超えて、心を繋ぐ最高のコミュニケーション"},{type:"四字熟語",word:"積小為大",reading:"せきしょういだい",meaning:"小さなことの積み重ねが、大きな成果を生む"},{type:"慣用句",word:"一寸先は闇",reading:"",meaning:"未来は誰にもわからない。だから今を大切に"},{type:"四字熟語",word:"率先垂範",reading:"そっせんすいはん",meaning:"自分が先頭に立って、手本を示すこと"},{type:"名言",word:"挫折とは、諦めない限り失敗ではない",reading:"",meaning:"諦めなければ、挫折は成功への通過点に過ぎない"},{type:"四字熟語",word:"風林火山",reading:"ふうりんかざん",meaning:"風のように速く、林のように静かに、火のように激しく、山のように動かない"},{type:"慣用句",word:"仏の顔も三度まで",reading:"",meaning:"どんな温厚な人でも、何度も怒らせると怒る"},{type:"名言",word:"自分を愛することが、すべての愛の始まり",reading:"オスカー・ワイルド",meaning:"自分を大切にすることで、他者への愛も生まれる"},{type:"四字熟語",word:"孤軍奮闘",reading:"こぐんふんとう",meaning:"一人で懸命に努力すること。あなたの頑張りは見えてるよ"},{type:"慣用句",word:"棚からぼたもち",reading:"",meaning:"思いがけない幸運が訪れること"},{type:"名言",word:"どんな道も、歩き続ければ必ず終わりがある",reading:"",meaning:"どんなに長く辛い道でも、歩き続ければ必ず出口がある"},{type:"四字熟語",word:"天真活発",reading:"てんしんかっぱつ",meaning:"生まれつき明るく元気で、活発なこと"},{type:"名言",word:"心が変われば行動が変わる",reading:"ウィリアム・ジェームズ",meaning:"まず心の持ち方を変えることで、行動が変わり、人生が変わる"},{type:"四字熟語",word:"高風亮節",reading:"こうふうりょうせつ",meaning:"高い品格と清廉な節操を持っていること"},{type:"慣用句",word:"亀の甲より年の功",reading:"",meaning:"年長者の経験は、知識以上に価値がある"},{type:"名言",word:"今日という日は、残りの人生の最初の日だ",reading:"",meaning:"今日から新しい人生を始めることができる"},{type:"四字熟語",word:"博学多才",reading:"はくがくたさい",meaning:"広い知識と多くの才能を持っていること"},{type:"慣用句",word:"夢は大きく持て",reading:"",meaning:"大きな夢を持つことで、行動の原動力になる"},{type:"四字熟語",word:"意気投合",reading:"いきとうごう",meaning:"互いの気持ちがぴったり合うこと"},{type:"名言",word:"勇気とは、恐れがないことではなく、恐れても前に進むこと",reading:"",meaning:"怖くても一歩踏み出すことが、本当の勇気"},{type:"四字熟語",word:"晴耕雨読",reading:"せいこううどく",meaning:"晴れた日は畑を耕し、雨の日は本を読む。自然に沿った生き方"},{type:"四字熟語",word:"無病息災",reading:"むびょうそくさい",meaning:"病気もなく、健康で過ごせること"},{type:"名言",word:"世界は広い。しかし、それ以上に心は広い",reading:"",meaning:"心の広さは、世界の広さを超えることができる"},{type:"四字熟語",word:"千紫万紅",reading:"せんしばんこう",meaning:"さまざまな色の花が咲き乱れる様子。多様性の美しさ"},{type:"慣用句",word:"鬼に金棒",reading:"",meaning:"強いものがさらに強くなること"},{type:"四字熟語",word:"勇猛果敢",reading:"ゆうもうかかん",meaning:"勇ましく、決断力があること"},{type:"名言",word:"今日の善行が、明日の喜びになる",reading:"",meaning:"今日誰かに親切にすることが、未来の幸せにつながる"},{type:"四字熟語",word:"光風霽月",reading:"こうふうせいげつ",meaning:"心が晴れ晴れとして、清らかな状態"},{type:"慣用句",word:"身から出た錆",reading:"",meaning:"自分の行いが原因で、自分が苦しむこと"},{type:"四字熟語",word:"克己復礼",reading:"こっきふくれい",meaning:"自分の欲望に打ち勝ち、礼節を守ること"},{type:"名言",word:"愛されることより、愛することの方が大切",reading:"",meaning:"受け取るより与えることに、本当の幸せがある"},{type:"四字熟語",word:"清廉潔白",reading:"せいれんけっぱく",meaning:"心が清く正直で、後ろめたいことが何もないこと"},{type:"名言",word:"小さな親切が、大きな変化を生む",reading:"",meaning:"小さな善意が積み重なることで、世界を変えることができる"},{type:"四字熟語",word:"先見之明",reading:"せんけんのめい",meaning:"先のことを見通す、優れた洞察力のこと"},{type:"慣用句",word:"人の噂も七十五日",reading:"",meaning:"どんな噂も、時間が経てば忘れられる"},{type:"四字熟語",word:"不眠不休",reading:"ふみんふきゅう",meaning:"眠らず休まず、全力で取り組むこと。でも休息も大切に！"},{type:"名言",word:"感謝する心は、最高の美徳である",reading:"キケロ",meaning:"感謝できる心を持つことが、人間として最も美しいこと"},{type:"四字熟語",word:"不言実行",reading:"ふげんじっこう",meaning:"あれこれ言わず、黙って実行すること"},{type:"四字熟語",word:"玉石混交",reading:"ぎょくせきこんこう",meaning:"優れたものとそうでないものが混在していること"},{type:"名言",word:"生きることは、一つの冒険である",reading:"",meaning:"人生は冒険。挑戦することで、初めて生きている実感が生まれる"},{type:"四字熟語",word:"仁義礼智",reading:"じんぎれいち",meaning:"思いやり、義理、礼節、知恵の四つの徳"},{type:"四字熟語",word:"天下泰平",reading:"てんかたいへい",meaning:"世の中が穏やかで、平和な状態"},{type:"名言",word:"夢を持ち続ける限り、老いることはない",reading:"",meaning:"夢や目標が、人を若く保つ活力になる"},{type:"四字熟語",word:"雲外蒼天",reading:"うんがいそうてん",meaning:"雲の向こうには青空がある。困難の先には希望がある"},{type:"慣用句",word:"骨身を惜しまず",reading:"",meaning:"苦労をいとわず、一生懸命に働くこと"},{type:"四字熟語",word:"春風駘蕩",reading:"しゅんぷうたいとう",meaning:"春風のようにのどかで、おおらかなこと"},{type:"名言",word:"今この瞬間が、一番若い瞬間だ",reading:"",meaning:"今すぐ始めることが、いつも最良のタイミング"},{type:"四字熟語",word:"愚公移山",reading:"ぐこういざん",meaning:"根気よく努力すれば、どんな困難も乗り越えられる"},{type:"名言",word:"人は変えられないが、自分は変えられる",reading:"",meaning:"他人を変えようとするより、自分が変わることが大切"},{type:"四字熟語",word:"四海兄弟",reading:"しかいけいてい",meaning:"世界中の人々が皆兄弟のようなもの"},{type:"慣用句",word:"捨てる神あれば拾う神あり",reading:"",meaning:"不運があっても、必ず助けてくれる人が現れる"},{type:"名言",word:"失われた時間は戻らない。でも今から始められる",reading:"",meaning:"過去を嘆くより、今できることを始めよう"},{type:"四字熟語",word:"報恩謝徳",reading:"ほうおんしゃとく",meaning:"受けた恩に感謝し、お返しをすること"},{type:"名言",word:"一日一日を大切に生きることが、人生を豊かにする",reading:"",meaning:"毎日を丁寧に生きることが、豊かな人生につながる"},{type:"四字熟語",word:"温柔敦厚",reading:"おんじゅうとんこう",meaning:"穏やかで優しく、誠実なこと"},{type:"慣用句",word:"根を詰める",reading:"",meaning:"一つのことに集中して、根気よく取り組むこと"},{type:"四字熟語",word:"蛍雪之功",reading:"けいせつのこう",meaning:"苦労して学問に励んだ成果のこと"},{type:"名言",word:"美しいものを見る目を持つ人は、永遠に若い",reading:"",meaning:"美しいものに感動できる心が、人を生き生きとさせる"},{type:"四字熟語",word:"磊磊落落",reading:"らいらいらくらく",meaning:"さっぱりとして、小事にこだわらない大らかな様子"},{type:"慣用句",word:"情に棹させば流される",reading:"夏目漱石",meaning:"感情に流されすぎず、理性のバランスも大切に"},{type:"四字熟語",word:"百尺竿頭",reading:"ひゃくしゃくかんとう",meaning:"最高の状態からさらに上を目指すこと"},{type:"名言",word:"与えることは、受け取ることよりも幸福である",reading:"",meaning:"誰かに何かを与えることで、自分も幸せになれる"},{type:"四字熟語",word:"天佑神助",reading:"てんゆうしんじょ",meaning:"天や神の助けを受けること。運も味方につけよう"},{type:"名言",word:"人生の目的は、幸福になることではなく、役に立つことだ",reading:"エマーソン",meaning:"誰かの役に立てることが、最高の生きがいになる"},{type:"慣用句",word:"見ぬが花",reading:"",meaning:"実際に見るより、想像している方が美しいことがある"},{type:"名言",word:"自分の人生の主人公は、自分自身だ",reading:"",meaning:"誰かに決めてもらうのではなく、自分で人生を選ぼう"},{type:"四字熟語",word:"堅忍持久",reading:"けんにんじきゅう",meaning:"我慢強く、長い間努力し続けること"},{type:"慣用句",word:"袖振り合うも他生の縁",reading:"",meaning:"ちょっとした出会いも、前世からの縁がある"},{type:"名言",word:"心の平和は、外から得るものではなく、内から生まれるもの",reading:"",meaning:"本当の平和は、自分の心の中にある"},{type:"四字熟語",word:"博愛主義",reading:"はくあいしゅぎ",meaning:"すべての人を広く平等に愛すること"},{type:"名言",word:"今日の自分は、昨日の自分より賢い",reading:"",meaning:"毎日の経験が、少しずつあなたを成長させている"},{type:"四字熟語",word:"快刀乱麻",reading:"かいとうらんま",meaning:"複雑な問題を素早く明快に解決すること"},{type:"慣用句",word:"後悔先に立たず",reading:"",meaning:"失敗してから後悔しても遅い。今のうちに考えよう"},{type:"四字熟語",word:"春暖花開",reading:"しゅんだんかかい",meaning:"春が来て暖かくなり、花が咲くこと。良い時期が来ること"},{type:"名言",word:"どんな人も、誰かに必要とされている",reading:"",meaning:"あなたにも、あなたを必要としている人がいる"},{type:"慣用句",word:"触らぬ神に祟りなし",reading:"",meaning:"余計なことに関わらない方が、トラブルを避けられる"},{type:"名言",word:"素直な心が、最大の才能である",reading:"",meaning:"素直に学び、受け入れる心が、才能を最大限に引き出す"}];
+
+let currentView='home',selectedScore=null,editingDate=null,calYear=new Date().getFullYear(),calMonth=new Date().getMonth(),selectedCalDate=null;
+let entries=JSON.parse(localStorage.getItem('jibun-entries')||'{}');
+const oldData=localStorage.getItem('mood-entries');
+if(oldData&&Object.keys(entries).length===0){entries=JSON.parse(oldData);localStorage.setItem('jibun-entries',JSON.stringify(entries));}
+function todayStr(){return new Date().toISOString().slice(0,10);}
+function mood(score){return MOODS.find(function(m){return m.score===score;});}
+function saveEntries(){localStorage.setItem('jibun-entries',JSON.stringify(entries));}
+var penguinMsg=PENGUIN_MSGS[Math.floor(Math.random()*PENGUIN_MSGS.length)];
+var dolphinMsg=DOLPHIN_MSGS[Math.floor(Math.random()*DOLPHIN_MSGS.length)];
+const now=new Date();
+document.getElementById('header-date').textContent=now.getFullYear()+"年"+MONTHS[now.getMonth()]+now.getDate()+"日";
+function showView(v){currentView=v;document.querySelectorAll('nav button').forEach(function(btn,i){btn.classList.toggle('active',['home','calendar','graph'][i]===v);});render();}
+function render(){var main=document.getElementById('main');if(currentView==='home')main.innerHTML=renderHome();else if(currentView==='calendar')main.innerHTML=renderCalendar();else main.innerHTML=renderGraphView();}
+function renderHome(){
+  var today=todayStr();var entry=entries[today];var html='';
+  html+='<div class="penguin-card"><div class="mascot">🐧</div><div><div class="mascot-msg">'+penguinMsg+'</div><div class="mascot-sub">'+(now.getMonth()+1)+'月'+now.getDate()+'日（'+DAYS[now.getDay()]+'）</div></div></div>';
+  html+='<div class="dolphin-card"><div class="mascot" style="animation-delay:.5s">🐬</div><div><span class="dolphin-type">'+dolphinMsg.type+'</span><div class="dolphin-word">'+dolphinMsg.word+'</div>'+(dolphinMsg.reading?'<div class="dolphin-reading">'+dolphinMsg.reading+(dolphinMsg.reading&&dolphinMsg.reading.length>1?' — '+dolphinMsg.reading:'')+'</div>':'')+'<div class="dolphin-meaning">'+dolphinMsg.meaning+'</div></div></div>';
+  if(entry&&editingDate!==today){var m=mood(entry.score);html+='<div class="card"><div class="recorded-card"><span class="recorded-emoji">'+m.emoji+'</span><div style="flex:1"><div class="recorded-sub">今日の気分</div><div class="recorded-label">'+m.label+'</div>'+(entry.comment?'<div class="recorded-comment">'+entry.comment+'</div>':'')+'</div></div><button class="edit-btn" onclick="startEdit(\''+today+'\')">✏️ 編集する</button></div>';}
+  else{var isEditing=editingDate===today;html+='<div class="card"><div style="font-size:14px;color:#999;margin-bottom:20px;text-align:center">'+(isEditing?'今日の気分を編集':'今日の気分はどうですか？')+'</div><div class="mood-row">';MOODS.forEach(function(m){var sel=selectedScore===m.score;html+='<button class="mood-btn '+(sel?'selected':'')+'" style="background:'+(sel?m.color:'#f4f4f4')+';box-shadow:'+(sel?'0 4px 16px '+m.color+'88':'none')+'" onclick="selectMood('+m.score+')">'+m.emoji+'</button>';});html+='</div>';if(selectedScore){html+='<div style="margin-bottom:16px;text-align:center;font-size:13px;color:#666;font-weight:600">'+mood(selectedScore).label+'</div>';}var currentComment=isEditing?(entry&&entry.comment?entry.comment:''):'';html+='<textarea id="comment-input" rows="2" placeholder="一言メモ（任意）">'+currentComment+'</textarea><button class="save-btn" onclick="saveEntry(\''+today+'\')" '+(selectedScore?'':'disabled')+'>'+(isEditing?'更新する':'記録する')+'</button>'+(isEditing?'<button class="edit-btn" style="width:100%;margin-top:8px;text-align:center" onclick="cancelEdit()">キャンセル</button>':'')+'</div>';}
+  html+='<button onclick="openPastModal()" style="width:100%;padding:12px;border:2px dashed #e5e5e5;border-radius:14px;background:transparent;font-size:13px;color:#aaa;cursor:pointer;margin-bottom:16px;">＋ 過去の日付に記録する</button>';
+  html+='<div class="section-label">RECENT</div>';
+  var sorted=Object.entries(entries).sort(function(a,b){return b[0].localeCompare(a[0]);}).slice(0,10);
+  if(sorted.length===0){html+='<div class="empty">まだ記録がありません</div>';}
+  else{sorted.forEach(function(item){var date=item[0];var e=item[1];var d=new Date(date+'T00:00:00');var m=mood(e.score);html+='<div class="entry-card"><span class="entry-emoji">'+m.emoji+'</span><div class="entry-info"><div class="entry-date">'+(d.getMonth()+1)+'/'+d.getDate()+'（'+DAYS[d.getDay()]+'）</div><div class="entry-label">'+m.label+'</div>'+(e.comment?'<div class="entry-comment">'+e.comment+'</div>':'')+'</div><button class="entry-edit" onclick="openEditModal(\''+date+'\')">✏️</button></div>';});}
   return html;
 }
-function selectMood(score) { selectedScore = score; render(); }
-function saveEntry(date) {
-  if (!selectedScore) return;
-  const comment = document.getElementById('comment-input') ? document.getElementById('comment-input').value : '';
-  entries[date] = { score: selectedScore, comment: comment };
-  saveEntries(); selectedScore = null; editingDate = null; closeModal(); render();
-}
-function startEdit(date) { editingDate = date; selectedScore = entries[date] ? entries[date].score : null; render(); }
-function cancelEdit() { editingDate = null; selectedScore = null; render(); }
-function openPastModal() {
-  selectedScore = null;
-  const modal = document.getElementById('modal-root');
-  let html = '<div class="modal-overlay" onclick="closeModalOutside(event)"><div class="modal"><div class="modal-title">📅 過去の日付に記録</div><input type="date" id="past-date" max="' + todayStr() + '" value="' + todayStr() + '" /><div class="mood-row">';
-  MOODS.forEach(function(m) { html += '<button class="mood-btn" style="background:#f4f4f4" onclick="selectModalMood(' + m.score + ')">' + m.emoji + '</button>'; });
-  html += '</div><textarea id="past-comment" rows="2" placeholder="一言メモ（任意）"></textarea><button class="save-btn" id="past-save-btn" onclick="savePastEntry()" disabled>記録する</button><button class="edit-btn" style="width:100%;text-align:center;margin-top:8px" onclick="closeModal()">キャンセル</button></div></div>';
-  modal.innerHTML = html;
-}
-function openEditModal(date) {
-  const entry = entries[date];
-  selectedScore = entry ? entry.score : null;
-  const d = new Date(date + 'T00:00:00');
-  const modal = document.getElementById('modal-root');
-  let html = '<div class="modal-overlay" onclick="closeModalOutside(event)"><div class="modal"><div class="modal-title">✏️ ' + (d.getMonth()+1) + '/' + d.getDate() + 'の記録を編集</div><div class="mood-row">';
-  MOODS.forEach(function(m) {
-    const sel = selectedScore === m.score;
-    html += '<button class="mood-btn ' + (sel ? 'selected' : '') + '" style="background:' + (sel ? m.color : '#f4f4f4') + ';box-shadow:' + (sel ? '0 4px 16px ' + m.color + '88' : 'none') + '" onclick="selectModalMood(' + m.score + ')">' + m.emoji + '</button>';
-  });
-  html += '</div><textarea id="past-comment" rows="2" placeholder="一言メモ（任意）">' + (entry && entry.comment ? entry.comment : '') + '</textarea><button class="save-btn" id="past-save-btn" onclick="saveEditEntry(\'' + date + '\')" ' + (selectedScore ? '' : 'disabled') + '>更新する</button><button class="edit-btn" style="width:100%;text-align:center;margin-top:8px" onclick="closeModal()">キャンセル</button></div></div>';
-  modal.innerHTML = html;
-}
-function selectModalMood(score) {
-  selectedScore = score;
-  document.querySelectorAll('.modal .mood-btn').forEach(function(btn, i) {
-    const m = MOODS[i];
-    const sel = score === m.score;
-    btn.style.background = sel ? m.color : '#f4f4f4';
-    btn.style.boxShadow = sel ? '0 4px 16px ' + m.color + '88' : 'none';
-    btn.classList.toggle('selected', sel);
-  });
-  const saveBtn = document.getElementById('past-save-btn');
-  if (saveBtn) saveBtn.disabled = false;
-}
-function savePastEntry() {
-  if (!selectedScore) return;
-  const date = document.getElementById('past-date').value;
-  const comment = document.getElementById('past-comment').value;
-  entries[date] = { score: selectedScore, comment: comment };
-  saveEntries(); selectedScore = null; closeModal(); render();
-}
-function saveEditEntry(date) {
-  if (!selectedScore) return;
-  const comment = document.getElementById('past-comment').value;
-  entries[date] = { score: selectedScore, comment: comment };
-  saveEntries(); selectedScore = null; closeModal(); render();
-}
-function closeModal() { document.getElementById('modal-root').innerHTML = ''; selectedScore = null; }
-function closeModalOutside(e) { if (e.target.classList.contains('modal-overlay')) closeModal(); }
-function getWeekDates() {
-  const today = new Date(); const day = today.getDay();
-  return Array.from({length:7}, function(_,i) { const d = new Date(today); d.setDate(today.getDate() - day + i); return d.toISOString().slice(0,10); });
-}
-function getMonthDates() {
-  const today = new Date();
-  const days = new Date(today.getFullYear(), today.getMonth()+1, 0).getDate();
-  return Array.from({length:days}, function(_,i) { const d = new Date(today.getFullYear(), today.getMonth(), i+1); return d.toISOString().slice(0,10); });
-}
-function renderGraph(dates, title) {
-  const today = todayStr();
-  const scored = dates.filter(function(d){ return entries[d]; });
-  const avg = scored.length ? (scored.reduce(function(s,d){ return s + entries[d].score; }, 0) / scored.length).toFixed(1) : null;
-  let html = '<div class="graph-header"><div class="graph-title">' + title + 'の気分</div>' + (avg ? '<div class="avg-badge">平均 ' + avg + '</div>' : '') + '</div><div class="graph-card"><div class="bars" style="min-width:' + (dates.length * 28) + 'px">';
-  dates.forEach(function(date) {
-    const entry = entries[date]; const score = entry ? entry.score : 0;
-    const h = score ? (score / 5) * 100 : 4; const m = score ? mood(score) : null;
-    const d = new Date(date + 'T00:00:00'); const isToday = date === today;
-    html += '<div class="bar-col"><div class="bar-emoji">' + (score ? m.emoji : '') + '</div><div class="bar" style="height:' + h + 'px;background:' + (score ? m.color : '#f0f0f0') + '"></div><div class="bar-day" style="color:' + (isToday ? '#1c1c1c' : '#bbb') + ';font-weight:' + (isToday ? 700 : 400) + '">' + d.getDate() + '</div></div>';
-  });
-  html += '</div><div class="mood-legend">';
-  MOODS.forEach(function(m) { html += '<div class="legend-item"><div class="legend-emoji">' + m.emoji + '</div><div class="legend-num">' + m.score + '</div></div>'; });
-  html += '</div></div>';
-  if (!scored.length) { html += '<div class="empty">この期間の記録がありません</div>'; }
+function renderCalendar(){
+  var today=todayStr();var firstDay=new Date(calYear,calMonth,1).getDay();var daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  var html='<div class="card"><div class="calendar-header"><button class="cal-nav" onclick="calPrev()">＜</button><div class="calendar-title">'+calYear+'年'+MONTHS[calMonth]+'</div><button class="cal-nav" onclick="calNext()">＞</button></div><div class="calendar-grid">';
+  ['日','月','火','水','木','金','土'].forEach(function(d){html+='<div class="cal-day-label">'+d+'</div>';});
+  for(var i=0;i<firstDay;i++){html+='<div class="cal-day empty"></div>';}
+  for(var d=1;d<=daysInMonth;d++){var dateStr=calYear+'-'+String(calMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');var entry=entries[dateStr];var m=entry?mood(entry.score):null;var isToday=dateStr===today;var bg=m?m.color+'88':'#f4f4f4';html+='<button class="cal-day'+(isToday?' today':'')+'" style="background:'+bg+'" onclick="selectDate(\''+dateStr+'\')">'+(m?'<span class="cal-emoji">'+m.emoji+'</span>':'')+'<span class="cal-num">'+d+'</span></button>';}
+  html+='</div></div>';
+  if(selectedCalDate){var e=entries[selectedCalDate];var sd=new Date(selectedCalDate+'T00:00:00');html+='<div class="detail-card">';if(e){var dm=mood(e.score);html+='<div class="detail-emoji">'+dm.emoji+'</div><div class="detail-info"><div class="detail-date">'+(sd.getMonth()+1)+'月'+sd.getDate()+'日（'+DAYS[sd.getDay()]+'）</div><div class="detail-label">'+dm.label+'</div>'+(e.comment?'<div class="detail-comment">'+e.comment+'</div>':'<div class="detail-empty">メモなし</div>')+'</div><button class="entry-edit" onclick="openEditModal(\''+selectedCalDate+'\')">✏️</button>';}else{html+='<div class="detail-emoji">📭</div><div class="detail-info"><div class="detail-date">'+(sd.getMonth()+1)+'月'+sd.getDate()+'日（'+DAYS[sd.getDay()]+'）</div><div class="detail-empty">記録がありません</div><button class="edit-btn" style="margin-top:8px" onclick="openEditModal(\''+selectedCalDate+'\')">＋ 記録する</button></div>';}html+='</div>';}
+  else{html+='<div class="empty">日付をタップすると詳細が見られます</div>';}
   return html;
 }
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', function(e) { e.preventDefault(); deferredPrompt = e; document.getElementById('install-banner').style.display = 'flex'; });
-function installApp() { if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then(function(){ deferredPrompt = null; document.getElementById('install-banner').style.display = 'none'; }); } }
-if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
+function calPrev(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}selectedCalDate=null;render();}
+function calNext(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}selectedCalDate=null;render();}
+function selectDate(date){selectedCalDate=date;render();}
+function renderGraphView(){
+  var today=todayStr();var dates=getMonthDates();var scored=dates.filter(function(d){return entries[d];});
+  var avg=scored.length?(scored.reduce(function(s,d){return s+entries[d].score;},0)/scored.length).toFixed(1):null;
+  var html='<div class="graph-header"><div class="graph-title">'+MONTHS[new Date().getMonth()]+'の気分</div>'+(avg?'<div class="avg-badge">平均 '+avg+'</div>':'')+'</div><div class="graph-card"><div class="bars" style="min-width:'+(dates.length*28)+'px">';
+  dates.forEach(function(date){var entry=entries[date];var score=entry?entry.score:0;var h=score?(score/5)*100:4;var m=score?mood(score):null;var d=new Date(date+'T00:00:00');var isToday=date===today;html+='<div class="bar-col"><div class="bar-emoji">'+(score?m.emoji:'')+'</div><div class="bar" style="height:'+h+'px;background:'+(score?m.color:'#f0f0f0')+'"></div><div class="bar-day" style="color:'+(isToday?'#1c1c1c':'#bbb')+';font-weight:'+(isToday?700:400)+'">'+d.getDate()+'</div></div>';});
+  html+='</div><div class="mood-legend">';MOODS.forEach(function(m){html+='<div class="legend-item"><div class="legend-emoji">'+m.emoji+'</div><div class="legend-num">'+m.score+'</div></div>';});html+='</div></div>';
+  if(!scored.length){html+='<div class="empty">この月の記録がありません</div>';}return html;
+}
+function selectMood(score){selectedScore=score;render();}
+function saveEntry(date){if(!selectedScore)return;var comment=document.getElementById('comment-input')?document.getElementById('comment-input').value:'';entries[date]={score:selectedScore,comment:comment};saveEntries();selectedScore=null;editingDate=null;closeModal();render();}
+function startEdit(date){editingDate=date;selectedScore=entries[date]?entries[date].score:null;render();}
+function cancelEdit(){editingDate=null;selectedScore=null;render();}
+function openPastModal(){selectedScore=null;var modal=document.getElementById('modal-root');var html='<div class="modal-overlay" onclick="closeModalOutside(event)"><div class="modal"><div class="modal-title">📅 過去の日付に記録</div><input type="date" id="past-date" max="'+todayStr()+'" value="'+todayStr()+'" /><div class="mood-row">';MOODS.forEach(function(m){html+='<button class="mood-btn" style="background:#f4f4f4" onclick="selectModalMood('+m.score+')">'+m.emoji+'</button>';});html+='</div><textarea id="past-comment" rows="2" placeholder="一言メモ（任意）"></textarea><button class="save-btn" id="past-save-btn" onclick="savePastEntry()" disabled>記録する</button><button class="edit-btn" style="width:100%;text-align:center;margin-top:8px" onclick="closeModal()">キャンセル</button></div></div>';modal.innerHTML=html;}
+function openEditModal(date){var entry=entries[date];selectedScore=entry?entry.score:null;var d=new Date(date+'T00:00:00');var modal=document.getElementById('modal-root');var html='<div class="modal-overlay" onclick="closeModalOutside(event)"><div class="modal"><div class="modal-title">✏️ '+(d.getMonth()+1)+'/'+d.getDate()+'の記録を編集</div><div class="mood-row">';MOODS.forEach(function(m){var sel=selectedScore===m.score;html+='<button class="mood-btn '+(sel?'selected':'')+'" style="background:'+(sel?m.color:'#f4f4f4')+';box-shadow:'+(sel?'0 4px 16px '+m.color+'88':'none')+'" onclick="selectModalMood('+m.score+')">'+m.emoji+'</button>';});html+='</div><textarea id="past-comment" rows="2" placeholder="一言メモ（任意）">'+(entry&&entry.comment?entry.comment:'')+'</textarea><button class="save-btn" id="past-save-btn" onclick="saveEditEntry(\''+date+'\')" '+(selectedScore?'':'disabled')+'>更新する</button><button class="edit-btn" style="width:100%;text-align:center;margin-top:8px" onclick="closeModal()">キャンセル</button></div></div>';modal.innerHTML=html;}
+function selectModalMood(score){selectedScore=score;document.querySelectorAll('.modal .mood-btn').forEach(function(btn,i){var m=MOODS[i];var sel=score===m.score;btn.style.background=sel?m.color:'#f4f4f4';btn.style.boxShadow=sel?'0 4px 16px '+m.color+'88':'none';btn.classList.toggle('selected',sel);});var saveBtn=document.getElementById('past-save-btn');if(saveBtn)saveBtn.disabled=false;}
+function savePastEntry(){if(!selectedScore)return;var date=document.getElementById('past-date').value;var comment=document.getElementById('past-comment').value;entries[date]={score:selectedScore,comment:comment};saveEntries();selectedScore=null;closeModal();render();}
+function saveEditEntry(date){if(!selectedScore)return;var comment=document.getElementById('past-comment').value;entries[date]={score:selectedScore,comment:comment};saveEntries();selectedScore=null;closeModal();selectedCalDate=date;render();}
+function closeModal(){document.getElementById('modal-root').innerHTML='';selectedScore=null;}
+function closeModalOutside(e){if(e.target.classList.contains('modal-overlay'))closeModal();}
+function getMonthDates(){var today=new Date();var days=new Date(today.getFullYear(),today.getMonth()+1,0).getDate();return Array.from({length:days},function(_,i){var d=new Date(today.getFullYear(),today.getMonth(),i+1);return d.toISOString().slice(0,10);});}
+var deferredPrompt;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;document.getElementById('install-banner').style.display='flex';});
+function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;document.getElementById('install-banner').style.display='none';});}}
+if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js');}
 render();
 </script>
 </body>
